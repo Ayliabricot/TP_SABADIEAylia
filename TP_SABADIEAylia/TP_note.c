@@ -82,7 +82,7 @@ int preremplir(int grille[9][9], int taille, int remplissage)
 	{
 		ligne = rand() % taille;
 		colonne = rand() % taille;
-		while (grille[colonne][ligne] == 0)
+		while (grille[ligne][colonne] != 0)
 		{
 			ligne = rand() % taille;
 			colonne = rand() % taille;
@@ -146,6 +146,7 @@ int main()
 
 	int taille =9;
 	initialisation(grille_moyenne, taille);
+	preremplir(grille_moyenne, taille, 1);
 	affichage(grille_moyenne, taille);
 	remplir(grille_moyenne, taille);
 	affichage(grille_moyenne, taille);
