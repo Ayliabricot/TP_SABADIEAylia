@@ -13,6 +13,37 @@ int initialisation(int grille[9][9], int taille) {
 	return 0;
 }
 
+int verifier(int grille[9][9],int valeur, int colonne, int ligne, int taille)
+{
+	int valider = 1;
+	if (valeur >= 1 && valeur <= taille)
+	{
+		if (colonne <= taille && colonne>0 && ligne <= taille && ligne>0)
+		{
+			for (int i = 0; i < taille; i++)
+			{
+				for (int j = 0; j < taille; j++)
+				{
+					if (grille[i][j] == valeur)
+					{
+						return 0;
+					}
+				}
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		return 0;
+	}
+	return 1;
+	
+}
+
 int remplir(int grille[9][9], int taille) {
 	int ligne = 0;
 	int colonne = 0;
@@ -26,9 +57,14 @@ int remplir(int grille[9][9], int taille) {
 		scanf_s("%d", &colonne);
 		printf("\nQuelle est votre valeur? ");
 		scanf_s("%d", &valeur);
-		if (ligne <= taille && colonne <= taille)
+		int verification = verifier(grille,valeur, colonne, ligne, taille);
+		if (verification == 1)
 		{
-			grille[ligne-1][colonne-1] = valeur;
+			grille[ligne - 1][colonne - 1] = valeur;
+		}
+		else
+		{
+			printf("\nLes caracteristiques de votre valeur sont incorrectes.\n");
 		}
 		printf("\nSouhaitez-vous modifier une autre valeur? (oui - 1 / non - 0) ");
 		scanf_s("%d", &continuer);
