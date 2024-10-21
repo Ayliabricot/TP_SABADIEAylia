@@ -15,19 +15,22 @@ int initialisation(int grille[9][9], int taille) {
 
 int verifier(int grille[9][9],int valeur, int colonne, int ligne, int taille)
 {
-	int valider = 1;
 	if (valeur >= 1 && valeur <= taille)
 	{
 		if (colonne <= taille && colonne>0 && ligne <= taille && ligne>0)
 		{
 			for (int i = 0; i < taille; i++)
 			{
-				for (int j = 0; j < taille; j++)
+				if (grille[ligne-1][i] == valeur)
 				{
-					if (grille[i][j] == valeur)
-					{
-						return 0;
-					}
+					return 0;
+				}
+			}
+			for (int j = 0; j < taille; j++)
+			{
+				if (grille[j][colonne-1] == valeur)
+				{
+					return 0;
 				}
 			}
 		}
@@ -144,47 +147,10 @@ int main()
 		{8, 4, 0, 3, 0, 1, 0, 5, 9}
 	};
 
-	int grille_moyenne2[9][9] = {
-		{1, 0, 0, 7, 0, 6, 0, 0, 0},
-		{0, 0, 0, 0, 0, 8, 5, 6, 0},
-		{6, 0, 8, 0, 5, 3, 4, 0, 1},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 6},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 3, 0, 0, 0, 0, 0, 0, 0},
-		{8, 4, 0, 3, 0, 1, 0, 5, 9}
-	};
-
-	int grille_moyenne3[9][9] = {
-		{1, 0, 0, 7, 0, 6, 0, 0, 0},
-		{0, 0, 0, 0, 0, 8, 5, 6, 0},
-		{6, 0, 8, 0, 5, 3, 4, 0, 1},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 6},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 3, 0, 0, 0, 0, 0, 0, 0},
-		{8, 4, 0, 3, 0, 1, 0, 5, 9}
-	};
-
-	int taille =9;
+	int taille =3;
 	initialisation(grille_moyenne, taille);
-	preremplir(grille_moyenne, taille, 1);
+	preremplir(grille_moyenne, taille, 2);
 	affichage(grille_moyenne, taille);
-
-	printf("\n");
-
-	initialisation(grille_moyenne2, 5);
-	preremplir(grille_moyenne2, 5, 2);
-	affichage(grille_moyenne2, 5);
-
-
-	printf("\n");
-
-	initialisation(grille_moyenne3, 4);
-	preremplir(grille_moyenne3, 4, 3);
-	affichage(grille_moyenne3, 4);
 	remplir(grille_moyenne, taille);
 	affichage(grille_moyenne, taille);
 
