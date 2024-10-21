@@ -72,6 +72,27 @@ int remplir(int grille[9][9], int taille) {
 	return 0;
 }
 
+int preremplir(int grille[9][9], int taille, int remplissage)
+{
+	int nombre_valeurs = (taille*taille) / (remplissage + 1);
+	srand(time(NULL));
+	int ligne = 0;
+	int colonne = 0;
+	for (int i = 0; i < nombre_valeurs; i++)
+	{
+		ligne = rand() % taille;
+		colonne = rand() % taille;
+		while (grille[colonne][ligne] == 0)
+		{
+			ligne = rand() % taille;
+			colonne = rand() % taille;
+		}
+		int nombre = rand() % taille + 1;
+		grille[ligne][colonne] = nombre;
+	}
+	return 0;
+}
+
 int affichage(int grille[9][9], int taille)
 {
 	for (int i = 0; i < taille; i++)
