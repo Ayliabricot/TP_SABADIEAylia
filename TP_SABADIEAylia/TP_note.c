@@ -145,51 +145,83 @@ int affichage(int grille[9][9], int taille)
 int main()
 {
 	srand(time(NULL));
-
+	int continuer = 1;
 	
-	int grille_moyenne[9][9] = {
-		{1, 0, 0, 7, 0, 6, 0, 0, 0},
-		{0, 0, 0, 0, 0, 8, 5, 6, 0},
-		{6, 0, 8, 0, 5, 3, 4, 0, 1},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 6},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 3, 0, 0, 0, 0, 0, 0, 0},
-		{8, 4, 0, 3, 0, 1, 0, 5, 9}
-	};
+	while (continuer==1)
+	{
+		int grille_moyenne[9][9] = {
+			{1, 0, 0, 7, 0, 6, 0, 0, 0},
+			{0, 0, 0, 0, 0, 8, 5, 6, 0},
+			{6, 0, 8, 0, 5, 3, 4, 0, 1},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 6},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 3, 0, 0, 0, 0, 0, 0, 0},
+			{8, 4, 0, 3, 0, 1, 0, 5, 9}
+		};
 
-	int taille =0;
-	int initialiser = 0;
-	int aleatoire = 0;
-	int niveau = 0;
-	int resoudre = 0;
-	printf("Veuillez saisir la taille de la grille comprise entre 1 et 9 : ");
-	scanf_s("%d", &taille);
-	printf("\nVoulez-vous initialiser la grille? (oui - 1 / non - 0) : ");
-	scanf_s("%d", &initialiser);
-	if (initialiser == 1)
-	{
-		initialisation(grille_moyenne, taille);
-	}
-	printf("\nVoulez-vous remplir aleatoirement la grille? (oui - 1 / non - 0) : ");
-	scanf_s("%d", &aleatoire);
-	if (aleatoire == 1)
-	{
-		printf("\nVeuillez saisir votre niveau (1, 2 ou 3) : ");
-		scanf_s("%d", &niveau);
-		preremplir(grille_moyenne, taille, niveau);
-	}
-	printf("\nVoici votre grille :\n\n");
-	affichage(grille_moyenne, taille);
-	printf("\nVoulez-vous tenter de resoudre la grille? (oui - 1 / non - 0) : ");
-	scanf_s("%d", &resoudre);
-	if (resoudre == 1)
-	{
-		remplir(grille_moyenne, taille);
-	}
-	printf("Voici votre grille :\n\n");
-	affichage(grille_moyenne, taille);
+		int taille =9;
+		int initialiser = 0;
+		int aleatoire = 0;
+		int niveau = 0;
+		int resoudre = 0;
+		printf("Voici votre grille actuelle par defaut :\n\n");
+		affichage(grille_moyenne, taille);
+		printf("\nVeuillez saisir la taille de la grille voulue comprise entre 1 et 9 : ");
+		scanf_s("%d", &taille);
+		if (taille >= 1 && taille <= 9)
+		{
+			printf("\nVoulez-vous initialiser la grille? (oui - 1 / non - 0) : ");
+			scanf_s("%d", &initialiser);
+			if (initialiser == 1)
+			{
+				initialisation(grille_moyenne, taille);
+				printf("\nVoulez-vous remplir aleatoirement ou manuellement la grille? (aleatoirement - 1 / manuellement - 2) : ");
+				scanf_s("%d", &aleatoire);
+				if (aleatoire == 1)
+				{
+					printf("\nVeuillez saisir votre niveau (1, 2 ou 3) : ");
+					scanf_s("%d", &niveau);
+					preremplir(grille_moyenne, taille, niveau);
+					printf("\nVoici votre grille :\n\n");
+					affichage(grille_moyenne, taille);
+				}
+				else if (aleatoire == 2)
+				{
+					remplir(grille_moyenne, taille);
+					printf("\nVoici votre grille :\n\n");
+					affichage(grille_moyenne, taille);
+				}
+			}
 
+			int tailleGrille = sizeof(grille_moyenne) / sizeof(grille_moyenne)[0];
+			printf("\nVoulez-vous tenter de resoudre la grille? (oui - 1 / non - 0) : ");
+			scanf_s("%d", &resoudre);
+			if (resoudre == 1)
+			{
+				if (taille == tailleGrille)
+				{
+					remplir(grille_moyenne, taille);
+				}
+				else
+				{
+					printf("\nIl n'y a pas de grille a resoudre.");
+				}
+			}
+			if (taille == tailleGrille)
+			{
+				printf("Voici votre grille :\n\n");
+				affichage(grille_moyenne, taille);
+			}
+		}
+		else
+		{
+			printf("\nLa taille de la grille est incorrecte.");
+		}
+		printf("\n\nVoulez-vous recommencer? (oui - 1 / non - 0) : ");
+		scanf_s("%d", &continuer);
+		printf("\n");
+	}
 	return 0;
 }
