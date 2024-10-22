@@ -39,11 +39,27 @@ int verifier(int grille[9][9],int valeur, int colonne, int ligne, int taille)
 	}
 }
 
+int gagner(int grille[9][9], int taille)
+{
+	for (int i = 0; i < taille; i++)
+	{
+		for (int j = 0; j < taille; j++)
+		{
+			if (grille[i][j] == 0)
+			{
+				return 0;
+			}
+		}
+	}
+	return 1;
+}
+
 int remplir(int grille[9][9], int taille) {
 	int ligne = 0;
 	int colonne = 0;
 	int valeur = 0;
 	int continuer = 1;
+	int victoire = 0;
 	while (continuer == 1)
 	{
 		printf("\nQuelle ligne souhaitez-vous modifier? ");
@@ -61,8 +77,17 @@ int remplir(int grille[9][9], int taille) {
 		{
 			printf("\nLes caracteristiques de votre valeur sont incorrectes.\n");
 		}
-		printf("\nSouhaitez-vous modifier une autre valeur? (oui - 1 / non - 0) : ");
-		scanf_s("%d", &continuer);
+		victoire = gagner(grille, taille);
+		if (victoire == 1)
+		{
+			printf("\nFelicitations, vous avez gagne!");
+			continuer = 0;
+		}
+		else
+		{
+			printf("\nSouhaitez-vous modifier une autre valeur? (oui - 1 / non - 0) : ");
+			scanf_s("%d", &continuer);
+		}
 	}
 	printf("\n");
 	return 0;
@@ -200,7 +225,7 @@ int main()
 			scanf_s("%d", &resoudre);
 			if (resoudre == 1)
 			{
-				if (taille == tailleGrille)
+				if ((initialiser == 1 && (aleatoire == 1 || aleatoire == 2)) || taille == tailleGrille)
 				{
 					remplir(grille_moyenne, taille);
 				}
