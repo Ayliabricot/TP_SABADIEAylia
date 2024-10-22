@@ -17,22 +17,16 @@ int verifier(int grille[9][9],int valeur, int colonne, int ligne, int taille)
 {
 	if (valeur >= 1 && valeur <= taille)
 	{
-		if (colonne <= taille && colonne>0 && ligne <= taille && ligne>0)
+		if (colonne < taille && colonne>=0 && ligne < taille && ligne>=0)
 		{
 			for (int i = 0; i < taille; i++)
 			{
-				if (grille[ligne-1][i] == valeur)
+				if (grille[ligne][i] == valeur || grille[i][colonne] == valeur)
 				{
 					return 0;
 				}
 			}
-			for (int j = 0; j < taille; j++)
-			{
-				if (grille[j][colonne-1] == valeur)
-				{
-					return 0;
-				}
-			}
+			return 1;
 		}
 		else
 		{
@@ -43,8 +37,6 @@ int verifier(int grille[9][9],int valeur, int colonne, int ligne, int taille)
 	{
 		return 0;
 	}
-	return 1;
-	
 }
 
 int remplir(int grille[9][9], int taille) {
@@ -60,7 +52,7 @@ int remplir(int grille[9][9], int taille) {
 		scanf_s("%d", &colonne);
 		printf("\nQuelle est votre valeur? ");
 		scanf_s("%d", &valeur);
-		int verification = verifier(grille,valeur, colonne, ligne, taille);
+		int verification = verifier(grille,valeur, colonne-1, ligne-1, taille);
 		if (verification == 1)
 		{
 			grille[ligne - 1][colonne - 1] = valeur;
@@ -78,9 +70,10 @@ int remplir(int grille[9][9], int taille) {
 int preremplir(int grille[9][9], int taille, int remplissage)
 {
 	int nombre_valeurs = (taille*taille) / (remplissage + 1);
-	srand(time(NULL));
 	int ligne = 0;
 	int colonne = 0;
+	int nombre = 0;
+	int verification = 0;
 	for (int i = 0; i < nombre_valeurs; i++)
 	{
 		ligne = rand() % taille;
@@ -90,8 +83,24 @@ int preremplir(int grille[9][9], int taille, int remplissage)
 			ligne = rand() % taille;
 			colonne = rand() % taille;
 		}
-		int nombre = rand() % taille + 1;
-		grille[ligne][colonne] = nombre;
+		nombre = rand() % taille + 1;
+		verification = verifier(grille, nombre, colonne, ligne, taille);
+		if (verification == 1)
+		{
+			grille[ligne][colonne] = nombre;
+		}
+		else
+		{ 
+			while (verification == 0)
+			{
+				nombre = rand() % taille +1;
+				verification = verifier(grille, nombre, colonne, ligne, taille);
+				if (verification == 1)
+				{
+					grille[ligne][colonne] = nombre;
+				}
+			}
+		}
 	}
 	return 0;
 }
@@ -134,6 +143,8 @@ int affichage(int grille[9][9], int taille)
 
 int main()
 {
+	srand(time(NULL));
+
 	
 	int grille_moyenne[9][9] = {
 		{1, 0, 0, 7, 0, 6, 0, 0, 0},
@@ -147,9 +158,9 @@ int main()
 		{8, 4, 0, 3, 0, 1, 0, 5, 9}
 	};
 
-	int taille =3;
+	int taille =9;
 	initialisation(grille_moyenne, taille);
-	preremplir(grille_moyenne, taille, 2);
+	preremplir(grille_moyenne, taille, 1);
 	affichage(grille_moyenne, taille);
 	remplir(grille_moyenne, taille);
 	affichage(grille_moyenne, taille);
