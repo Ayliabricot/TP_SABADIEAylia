@@ -344,7 +344,7 @@ int affichage(int grille[9][9], int taille)
 
 int main()
 {
-	srand(time(NULL));
+	srand(time(NULL)); 
 	int continuer = 1;
 	
 	while (continuer==1)
