@@ -13,17 +13,152 @@ int initialisation(int grille[9][9], int taille) {
 	return 0;
 }
 
-int verifier(int grille[9][9],int valeur, int colonne, int ligne, int taille)
+int verifier(int grille[9][9], int valeur, int colonne, int ligne, int taille)
 {
 	if (valeur >= 1 && valeur <= taille)
 	{
-		if (colonne < taille && colonne>=0 && ligne < taille && ligne>=0)
+		if (colonne < taille && colonne >= 0 && ligne < taille && ligne >= 0)
 		{
 			for (int i = 0; i < taille; i++)
 			{
 				if (grille[ligne][i] == valeur || grille[i][colonne] == valeur)
 				{
 					return 0;
+				}
+			}
+			if ((ligne) / 3 == 0)
+			{
+				if (colonne / 3 == 0)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 0; k < 3; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+				else if (colonne / 3 == 1)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 3; k < 6; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+				else if (colonne / 3 == 2)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 6; k < 9; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+			}
+			else if ((ligne) / 3 == 1)
+			{
+				if (colonne / 3 == 0)
+				{
+					for (int j = 3; j < 6; j++)
+					{
+						for (int k = 0; k < 3; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+				else if (colonne / 3 == 1)
+				{
+					for (int j = 3; j < 6; j++)
+					{
+						for (int k = 3; k < 6; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+				else if (colonne / 3 == 2)
+				{
+					for (int j = 3; j < 6; j++)
+					{
+						for (int k = 6; k < 9; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+			}
+			else if ((ligne) / 3 == 2)
+			{
+				if (colonne / 3 == 0)
+				{
+					for (int j = 6; j < 9; j++)
+					{
+						for (int k = 0; k < 3; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+				else if (colonne / 3 == 1)
+				{
+					for (int j = 6; j < 9; j++)
+					{
+						for (int k = 3; k < 6; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
+				}
+				else if (colonne / 3 == 2)
+				{
+					for (int j = 6; j < 9; j++)
+					{
+						for (int k = 6; k < 9; k++)
+						{
+							if (grille[j][k] == valeur)
+							{
+								return 0;
+							}
+
+						}
+					}
 				}
 			}
 			return 1;
@@ -235,7 +370,7 @@ int main()
 		int result = 2;
 		printf("Voici votre grille actuelle par defaut :\n\n");
 		affichage(grille_moyenne, taille);
-		printf("\nVeuillez saisir la taille de la grille voulue comprise entre 1 et 9 : ");
+		printf("\nVeuillez saisir la taille de la grille voulue, on joue en 3x3 donc seul 9 vous permettra de jouer : ");
 		scanf_s("%d", &taille);
 		if (taille >= 1 && taille <= 9)
 		{
@@ -293,7 +428,7 @@ int main()
 			}
 			else if (result == 0)
 			{
-				printf("La grille ne peut pas être résolue.");
+				printf("\nLa grille ne peut pas etre resolue.");
 			}
 		}
 		else
