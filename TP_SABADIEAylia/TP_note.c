@@ -80,6 +80,8 @@ int remplir(int grille[9][9], int taille) {
 		victoire = gagner(grille, taille);
 		if (victoire == 1)
 		{
+			printf("\nVoici votre grille : \n\n");
+			affichage(grille, taille);
 			printf("\nFelicitations, vous avez gagne!");
 			continuer = 0;
 		}
@@ -129,6 +131,44 @@ int preremplir(int grille[9][9], int taille, int remplissage)
 		}
 	}
 	return 0;
+}
+
+int resolution(int grille[9][9], int taille, int ligne, int colonne)
+{
+	if (colonne == taille)
+	{
+		colonne = 0;
+		ligne = ligne + 1;
+	}
+	if (ligne == taille)
+	{
+		return 1;
+	}
+	if (grille[ligne][colonne] != 0)
+	{
+		resolution(grille, taille, ligne, colonne + 1);
+	}
+	else
+	{
+		for (int i = 1; i <= taille; i++)
+		{
+			int verification = verifier(grille, i, colonne, ligne, taille);
+			if (verification == 1)
+			{
+				grille[ligne][colonne] = i;
+				int ok=resolution(grille, taille, ligne, colonne);
+				if (ok == 1)
+				{
+					return 1;
+				}
+				else
+				{
+					grille[ligne][colonne] = 0;
+				}
+			}
+		}
+		return 0;
+	}
 }
 
 int affichage(int grille[9][9], int taille)
@@ -191,6 +231,8 @@ int main()
 		int aleatoire = 0;
 		int niveau = 0;
 		int resoudre = 0;
+		int resoudre_aleatoire = 0;
+		int result = 2;
 		printf("Voici votre grille actuelle par defaut :\n\n");
 		affichage(grille_moyenne, taille);
 		printf("\nVeuillez saisir la taille de la grille voulue comprise entre 1 et 9 : ");
@@ -227,17 +269,31 @@ int main()
 			{
 				if ((initialiser == 1 && (aleatoire == 1 || aleatoire == 2)) || taille == tailleGrille)
 				{
-					remplir(grille_moyenne, taille);
+					printf("\nVoulez-vous tenter de resoudre manuellement ou automatiquement la grille? (manuel - 1 / automatique - 2) : ");
+					scanf_s("%d", &resoudre_aleatoire);
+					if (resoudre_aleatoire == 1)
+					{
+						remplir(grille_moyenne, taille);
+					}
+					else if (resoudre_aleatoire == 2)
+					{
+						result = resolution(grille_moyenne, taille, 0, 0);
+					}
 				}
 				else
 				{
 					printf("\nIl n'y a pas de grille a resoudre.");
 				}
 			}
-			if (taille == tailleGrille)
+			if (result == 1)
 			{
-				printf("Voici votre grille :\n\n");
+				printf("\nVoici votre grille :\n\n");
 				affichage(grille_moyenne, taille);
+				printf("Bravo vous avez gagne!");
+			}
+			else if (result == 0)
+			{
+				printf("La grille ne peut pas être résolue.");
 			}
 		}
 		else
