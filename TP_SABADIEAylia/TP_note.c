@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 
 int initialisation(int grille[9][9], int taille) {
 	for (int i = 0; i < taille; i++)
@@ -291,6 +292,10 @@ int resolution(int grille[9][9], int taille, int ligne, int colonne)
 			if (verification == 1)
 			{
 				grille[ligne][colonne] = i;
+				system("cls");
+				affichage(grille, taille);
+				Sleep(100);
+
 				int ok=resolution(grille, taille, ligne, colonne);
 				if (ok == 1)
 				{
@@ -422,9 +427,7 @@ int main()
 			}
 			if (result == 1)
 			{
-				printf("\nVoici votre grille :\n\n");
-				affichage(grille_moyenne, taille);
-				printf("Bravo vous avez gagne!");
+				printf("\nLa grille est resolue!");
 			}
 			else if (result == 0)
 			{
